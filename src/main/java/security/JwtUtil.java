@@ -9,9 +9,6 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.prince.ems.exception.InvalidTokenException;
-import com.prince.ems.exception.TokenExpiredException;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -75,6 +72,20 @@ public class JwtUtil {
 			throw new InvalidTokenException("Invalid Token");
 		}
 		
+	}
+	
+	
+	public Claims extractAllClaims(String token) {
+		
+		return Jwts.parser()
+				.verifyWith(SECRET)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+	}
+	
+	public String extractUsername(String token) {
+		return extractAllClaims(token).getSubject();
 	}
 
 }
