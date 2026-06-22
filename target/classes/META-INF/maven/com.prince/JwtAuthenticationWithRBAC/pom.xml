@@ -61,6 +61,11 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+        	<groupId>com.second-year</groupId>
+        	<artifactId>emsProjectDocker</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

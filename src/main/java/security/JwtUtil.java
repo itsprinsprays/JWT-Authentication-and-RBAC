@@ -9,7 +9,12 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.prince.ems.exception.InvalidTokenException;
+import com.prince.ems.exception.TokenExpiredException;
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -54,6 +59,22 @@ public class JwtUtil {
 						System.currentTimeMillis() + refreshExpiration))
 				.signWith(SECRET)
 				.compact();
+	}
+	
+	public boolean validateToken(String token) {
+		
+		try {
+			Jwts.parser()
+				.verifyWith(SECRET)
+				.build()
+				.parseSignedClaims(token);
+				return true;
+		} catch (ExpiredJwtException e) {
+			throw new TokenExpiredException("Token Expired");
+		} catch (JwtException | IllegalArgumentException e) {
+			throw new InvalidTokenException("Invalid Token");
+		}
+		
 	}
 
 }
