@@ -43,5 +43,17 @@ public class JwtUtil {
 				.compact();
 		
 	}
+	
+	public String refreshGenerateTOken(String username) {
+		
+		return Jwts.builder()
+				.claim(Claims.SUBJECT, username)
+				.claim("type", "refresh")
+				.claim(Claims.ISSUED_AT, new Date())
+				.claim(Claims.EXPIRATION, new Date(
+						System.currentTimeMillis() + refreshExpiration))
+				.signWith(SECRET)
+				.compact();
+	}
 
 }
