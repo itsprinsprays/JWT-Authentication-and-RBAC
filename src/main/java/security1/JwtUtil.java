@@ -54,5 +54,25 @@ public class JwtUtil {
 				.compact();
 		
 	}
+	
+	public boolean validateToken(String username) {
+		
+		try {
+			Jwts.parser()
+				.verifyWith(SECRET)
+				.build()
+				.parseSignedClaims(username);
+				
+			return true;
+			
+		} catch (ExpiredTokenException e) {
+			throw new TokenExpiredException("Token Expired");
+		} catch (JwtException | IllegalArgumentException e) {
+			throw new InvalidTokenException("Invalid Token");
+		}
+	}
+	
+
+	
 
 }
