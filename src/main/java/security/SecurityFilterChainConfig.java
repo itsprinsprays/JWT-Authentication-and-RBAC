@@ -1,6 +1,5 @@
 package security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,8 +26,9 @@ public class SecurityFilterChainConfig {
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						
-						.requestMatchers(HttpMethod.POST, "/api").permitAll()
-						.requestMatchers(HttpMethod.PUT, "/api/update").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.GET, "/api/public").permitAll()
+						.requestMatchers(HttpMethod.POST, "/api").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/api/update").hasAnyRole("ADMIN", "HR")
 						.anyRequest().authenticated()
 						
 						)

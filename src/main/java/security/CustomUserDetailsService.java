@@ -2,11 +2,13 @@ package security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import com.prince.ems.entity.User;
 import com.prince.ems.exception.ResourceNotFoundException;
 import com.prince.ems.repository.UserRepository;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 	
 	private final UserRepository userRepository;
