@@ -80,6 +80,10 @@ public class JwtUtil {
 					.getPayload();
 	}
 	
+	public String extractUsername(String username) {
+		return extractAllClaims(username).getSubject();
+	}
+	
 
 	
 
