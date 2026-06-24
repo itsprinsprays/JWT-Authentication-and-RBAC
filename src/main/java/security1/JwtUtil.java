@@ -72,6 +72,14 @@ public class JwtUtil {
 		}
 	}
 	
+	public Claims extractAllClaims(String username) {
+		return Jwts.parser()
+					.verifyWith(SECRET)
+					.build()
+					.parseSignedClaims(username)
+					.getPayload();
+	}
+	
 
 	
 
